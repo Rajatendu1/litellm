@@ -278,7 +278,7 @@ class TestValidateEnvironmentWithOAuth:
         databricks_base = DatabricksBase()
 
         with patch.object(
-            databricks_base, "get_oauth_m2m_token", return_value="oauth-token"
+            databricks_base, "get_cached_oauth_m2m_token", return_value="oauth-token"
         ) as mock_oauth:
             api_base, headers = databricks_base.databricks_validate_environment(
                 api_key=None,
@@ -546,7 +546,7 @@ class TestAuthenticationPriority:
         databricks_base = DatabricksBase()
 
         with patch.object(
-            databricks_base, "get_oauth_m2m_token", return_value="oauth-token"
+            databricks_base, "get_cached_oauth_m2m_token", return_value="oauth-token"
         ) as mock_oauth:
             api_base, headers = databricks_base.databricks_validate_environment(
                 api_key=None,  # No PAT provided - OAuth should be used
@@ -570,7 +570,7 @@ class TestAuthenticationPriority:
 
         # Mock the OAuth call - it will be attempted but PAT should override
         with patch.object(
-            databricks_base, "get_oauth_m2m_token", return_value="oauth-token"
+            databricks_base, "get_cached_oauth_m2m_token", return_value="oauth-token"
         ):
             api_base, headers = databricks_base.databricks_validate_environment(
                 api_key="dapi-explicit-pat",
